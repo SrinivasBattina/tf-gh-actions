@@ -24,20 +24,19 @@ jobs:
         with:
           terraform_version: 1.7.2 # Replace with your Terraform version
 
-      # Step 3: Set AWS Credentials
-      - name: Set AWS Credentials
-        run: |
-          echo $AWS_ACCESS_KEY_ID
-
-      # Step 4: Initialize Terraform
+      # Step 3: Initialize Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Step 5: Validate Terraform files
+      # Step 4: Validate Terraform files
       - name: Terraform Validate
         run: terraform validate
 
-      # Step 6: Terraform Plan
+      # Step 5: Terraform Plan
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -out=plan.tfplan
+
+      # Step 6: Terraform Apply
+      - name: Terraform Apply
+        run: terraform apply -auto-approve plan.tfplan
 

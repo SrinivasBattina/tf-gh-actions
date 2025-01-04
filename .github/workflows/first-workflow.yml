@@ -1,0 +1,35 @@
+name: Terraform Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  terraform:
+    name: Terraform Actions
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.2 # Replace with your Terraform version
+
+      # Step 3: Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 4: Validate Terraform files
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Step 5: Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -out=plan.tfplan
+

@@ -36,7 +36,7 @@ jobs:
       - name: Check for existing state or .terraform directory
         id: check_state
         run: |
-          if [ -f "terraform.tfstate" ] || [ -d ".terraform" ]; then
+          if [ -f "terraform.tfstate" ]; then
             echo "Terraform init is not required, state file or .terraform directory found."
             echo "skip_init=true" >> $GITHUB_ENV
           else

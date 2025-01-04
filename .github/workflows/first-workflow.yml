@@ -5,11 +5,6 @@ on:
     branches:
       - master
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
 jobs:
   terraform:
     name: Terraform Actions
@@ -26,15 +21,23 @@ jobs:
         with:
           terraform_version: 1.7.2 # Replace with your Terraform version
 
-      # Step 3: Initialize Terraform
+      # Step 3: Set AWS Credentials
+      - name: Set AWS Credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo "AWS credentials configured"
+
+      # Step 4: Initialize Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Step 4: Validate Terraform files
+      # Step 5: Validate Terraform files
       - name: Terraform Validate
         run: terraform validate
 
-      # Step 5: Terraform Plan
+      # Step 6: Terraform Plan
       - name: Terraform Plan
         run: terraform plan -out=plan.tfplan
 

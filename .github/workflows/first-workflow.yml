@@ -39,5 +39,5 @@ jobs:
 
       # Step 6: Terraform Plan
       - name: Terraform Plan
-        run: terraform plan -out=plan.tfplan
+        run: terraform plan
 

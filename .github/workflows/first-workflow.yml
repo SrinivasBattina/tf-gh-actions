@@ -42,5 +42,5 @@ jobs:
 
       # Step 7: Terraform Destroy
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve plan.tfplan
+        run: terraform destroy -auto-approve
 

@@ -22,18 +22,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
+      # Step 0: Check out the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Terraform CLI
+      # Step 1: Set up Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.7.2 # Replace with your Terraform version
+      
+      # Step:2 Check if state file exists (or .terraform directory exists)
+      - name: Check for existing state or .terraform directory
+        id: check_state
+        run: |
+          if [ -f "terraform.tfstate" ] || [ -d ".terraform" ]; then
+            echo "Terraform init is not required, state file or .terraform directory found."
+            echo "skip_init=true" >> $GITHUB_ENV
+          else
+            echo "State file or .terraform directory not found, initializing Terraform."
+            echo "skip_init=false" >> $GITHUB_ENV
 
-      # Step 3: Initialize Terraform
+      # Step3: Run terraform init if necessary
       - name: Terraform Init
+        if: ${{ env.skip_init != 'true' }}  # Only run if skip_init is false
         run: terraform init
 
       # Step 4: Validate Terraform files

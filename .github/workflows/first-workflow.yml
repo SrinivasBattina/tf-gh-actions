@@ -40,3 +40,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve plan.tfplan
 
+      # Step 7: Terraform Destroy
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve plan.tfplan
+

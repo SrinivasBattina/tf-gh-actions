@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   terraform:
@@ -23,11 +26,8 @@ jobs:
 
       # Step 3: Set AWS Credentials
       - name: Set AWS Credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          echo "AWS credentials configured"
+          echo $AWS_ACCESS_KEY_ID
 
       # Step 4: Initialize Terraform
       - name: Terraform Init
